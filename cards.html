@@ -1,0 +1,83 @@
+<html>
+
+<canvas id="gameCanvas" width="800" height="400"></canvas>
+
+<script>
+    var canvas;
+    var canvasContext;
+
+    var words;
+
+    function Card(value, suit, ) {
+        this.value = value;
+        this.suit = suit;
+    }
+
+    var deck = [];
+
+    for (i = 1; i < 11; i++) {
+        deck.push[i] = new Card(i, 'clubs')
+    }
+
+    //EVERYTHING BELOW BORROWED FROM pong.html (needs fixing)
+    window.onload = function () {
+        console.log("window loaded");
+        canvas = document.getElementById('gameCanvas');
+        canvasContext = canvas.getContext('2d');
+
+        var fPS = 30; //frames per second
+        setInterval(function () { drawEverything(); }, 1000 / fPS);
+
+        canvas.addEventListener('mousedown', handleMouseClick);
+
+        canvas.addEventListener('mousemove', function (evt) {
+            var mousePos = calcMousePos(evt);
+            //pad1Y = mousePos.y-(PADDLE_HEIGHT/2);
+        });
+
+    }
+
+    function drawEverything() {
+
+        //canvasContext.fillStyle = 'black';
+        colourRect(0, 0, canvas.width, canvas.height, 'black'); //creates black background
+
+        //colourRect(20, 20, 50, 80, 'red');
+        //colourRect(25, 25, 40, 70, 'blue');//draw card
+        for(i = 20; i < 20+520; i+=10){ // draw 52 cards
+            drawCard(i, 20);
+        }
+        drawCard(100,60);
+    }
+
+    function calcMousePos(evt) { //function for finding the cursor position
+        var rect = canvas.getBoundingClientRect();
+        var root = document.documentElement;
+        var mouseX = evt.clientX - rect.left - root.scrollLeft;
+        var mouseY = evt.clientY - rect.top - root.scrollTop;
+        return {
+            x: mouseX,
+            y: mouseY
+        };
+    }
+
+    function handleMouseClick(evt) {
+        if (showWinScreen) {
+            showWinScreen = false;
+        }
+    }
+
+    function drawCard(cardX, cardY) {
+        colourRect(cardX, cardY, 50, 80, 'red');
+        colourRect(cardX+5, cardY+5, 40, 70, 'blue')
+    }
+
+    function colourRect(leftX, topY, width, height, drawColour) { //funciton for drawing rectangles
+        canvasContext.fillStyle = drawColour;
+        canvasContext.fillRect(leftX, topY, width, height);
+    }
+
+
+</script>
+
+</html>
