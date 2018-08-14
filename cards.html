@@ -7,21 +7,24 @@
     var canvasContext;
 
     var deck = [];
-    var clubs = {};
-    var hearts = {};
-    var spades = {};
-    var diamonds = {};
+    var clubs = [{}];
+    var hearts = [{}];
+    var spades = [{}];
+    var diamonds = [{}];
 
     console.log(deck);
     
     var populateDeck = function (name, suit) {
-        for (i = 1; i < 14; i++) { //  populate the deck
-
+        for (i = 0; i < 13; i++) { //  populate the deck
+            if (i==1){
+                i++;
+            }
             name[i] = { value: i, suit: suit };
 
 
             //Set the Aces etc
-            if (name[i].value == 1) {
+            
+            if (name[i].value == 0) {
                 name[i].value = 'A';
             }
             if (name[i].value == 11) {
@@ -34,14 +37,26 @@
                 name[i].value = 'K';
             }
         }
-        deck = deck.concat(name);    
+        
     }
+    
+    var shuffleDeck = function (a) { //function to shuffle the deck
+           var newDeck = [];
+            for (i = 0; i < a.length; i ++){
+                newDeck.push(a[Math.floor((Math.random()*a.length)+1)]); // choose a random index 
+            }
+
+            
+            return newDeck;
+        }
+
+    //Setting up the suits
     populateDeck(clubs, 'clubs');
     populateDeck(hearts, 'hearts');
     populateDeck(diamonds, 'diamonds');
     populateDeck(spades, 'spades');
-    //deck.concat(clubs,hearts, diamonds, spades);
-
+    deck = deck.concat(clubs,hearts, diamonds, spades);       
+    //console.log(shuffleDeck(deck));
     console.log(deck);
 
 
