@@ -15,28 +15,21 @@
     console.log(deck);
     
     var populateDeck = function (name, suit) {
-        for (i = 0; i < 13; i++) { //  populate the deck
-            if (i==1){
+        for (i = 0; i <= 10; i++) { //  populate the deck
+            if (i == 0){
+                name[i] = {value: 'A', suit: suit};
                 i++;
             }
-            name[i] = { value: i, suit: suit };
+            else{
+            name[i-1] = { value: i, suit: suit };
+            }
+                  
 
-
-            //Set the Aces etc
-            
-            if (name[i].value == 0) {
-                name[i].value = 'A';
-            }
-            if (name[i].value == 11) {
-                name[i].value = 'J';
-            }
-            if (name[i].value == 12) {
-                name[i].value = 'Q';
-            }
-            if (name[i].value == 13) {
-                name[i].value = 'K';
-            }
+           
         }
+        name[10] = {value: 'J', suit: suit};  
+        name[11] = {value: 'Q', suit: suit};  
+        name[12] = {value: 'K', suit: suit};  
         
     }
     
