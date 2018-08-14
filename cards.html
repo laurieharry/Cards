@@ -1,23 +1,35 @@
 <html>
 
-<canvas id="gameCanvas" width="800" height="400"></canvas>
+<canvas id="gameCanvas" width="600" height="400"></canvas>
 
 <script>
     var canvas;
     var canvasContext;
 
-    var words;
+    var deck = {};
+    //deck.fill(0,0, 52);
 
-    function Card(value, suit, ) {
+    console.log(deck);
+    /*function Card(value, suit) { //card constructor
         this.value = value;
+        this.name = value + " of " + suit; // e.g "2 of clubs"
         this.suit = suit;
-    }
+    }*/
 
-    var deck = [];
 
-    for (i = 1; i < 11; i++) {
-        deck.push[i] = new Card(i, 'clubs')
-    }
+
+        for (i = 1; i < 14; i++) {
+            deck[i] = { suit: 'clubs', value: i };
+            deck[i+13]= { suit: 'hearts', value: i };
+            deck[i+13*2]= { suit: 'hearts', value: i };
+            deck[i+13*3]= { suit: 'hearts', value: i };
+        }
+
+        
+    console.log(deck[52]);
+        //console.log(deck[0].value);
+        //console.log(deck[51].name);
+    //console.log(deck[3].suit);
 
     //EVERYTHING BELOW BORROWED FROM pong.html (needs fixing)
     window.onload = function () {
@@ -44,10 +56,24 @@
 
         //colourRect(20, 20, 50, 80, 'red');
         //colourRect(25, 25, 40, 70, 'blue');//draw card
-        for(i = 20; i < 20+520; i+=10){ // draw 52 cards
+        for (i = 20; i < 20 + 520; i += 10) { // draw 52 cards
             drawCard(i, 20);
         }
-        drawCard(100,60);
+        //drawCard(100,200);// draw the players hand
+        //drawCard(160, 200);
+        drawHand(100);
+
+    }
+
+    function drawCard(cardX, cardY) {
+        colourRect(cardX, cardY, 50, 80, 'red');
+        colourRect(cardX + 5, cardY + 5, 40, 70, 'blue')
+    }
+
+    function drawHand(cardX) { // for drawing the players hand
+        drawCard(cardX, 200);
+        drawCard(cardX + 60, 200); //Future PSUEDO: For each card in hand, draw them 60px apart
+        drawCard(cardX + 120, 200);
     }
 
     function calcMousePos(evt) { //function for finding the cursor position
@@ -67,10 +93,7 @@
         }
     }
 
-    function drawCard(cardX, cardY) {
-        colourRect(cardX, cardY, 50, 80, 'red');
-        colourRect(cardX+5, cardY+5, 40, 70, 'blue')
-    }
+
 
     function colourRect(leftX, topY, width, height, drawColour) { //funciton for drawing rectangles
         canvasContext.fillStyle = drawColour;
