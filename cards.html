@@ -6,30 +6,44 @@
     var canvas;
     var canvasContext;
 
-    var deck = {};
-    //deck.fill(0,0, 52);
+    var deck = [];
+    var clubs = {};
+    var hearts = {};
+    var spades = {};
+    var diamonds = {};
 
     console.log(deck);
-    /*function Card(value, suit) { //card constructor
-        this.value = value;
-        this.name = value + " of " + suit; // e.g "2 of clubs"
-        this.suit = suit;
-    }*/
+    
+    var populateDeck = function (name, suit) {
+        for (i = 1; i < 14; i++) { //  populate the deck
+
+            name[i] = { value: i, suit: suit };
 
 
-
-        for (i = 1; i < 14; i++) {
-            deck[i] = { suit: 'clubs', value: i };
-            deck[i+13]= { suit: 'hearts', value: i };
-            deck[i+13*2]= { suit: 'hearts', value: i };
-            deck[i+13*3]= { suit: 'hearts', value: i };
+            //Set the Aces etc
+            if (name[i].value == 1) {
+                name[i].value = 'A';
+            }
+            if (name[i].value == 11) {
+                name[i].value = 'J';
+            }
+            if (name[i].value == 12) {
+                name[i].value = 'Q';
+            }
+            if (name[i].value == 13) {
+                name[i].value = 'K';
+            }
         }
+        deck = deck.concat(name);    
+    }
+    populateDeck(clubs, 'clubs');
+    populateDeck(hearts, 'hearts');
+    populateDeck(diamonds, 'diamonds');
+    populateDeck(spades, 'spades');
+    //deck.concat(clubs,hearts, diamonds, spades);
 
-        
-    console.log(deck[52]);
-        //console.log(deck[0].value);
-        //console.log(deck[51].name);
-    //console.log(deck[3].suit);
+    console.log(deck);
+
 
     //EVERYTHING BELOW BORROWED FROM pong.html (needs fixing)
     window.onload = function () {
