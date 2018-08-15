@@ -12,7 +12,7 @@
     var spades = [{}];
     var diamonds = [{}];
 
-    console.log(deck);
+    
     
     var populateDeck = function (name, suit) {
         for (i = 0; i <= 10; i++) { //  populate the deck
@@ -30,19 +30,29 @@
         name[10] = {value: 'J', suit: suit};  
         name[11] = {value: 'Q', suit: suit};  
         name[12] = {value: 'K', suit: suit};  
-        
+        console.log("Deck populated");
     }
     
-    var shuffleDeck = function (a) { //function to shuffle the deck
-           var newDeck = [];
-            for (i = 0; i < a.length; i ++){
-                newDeck.push(a[Math.floor((Math.random()*a.length)+1)]); // choose a random index 
+        var shuffleDeck = function (a) { //function to shuffle the deck (NOT WORKING CORRECTLY)
+            var newDeck = [];
+
+            for (i = 0; i < a.length; i++) {
+                var randNum = Math.floor((Math.random() * a.length) + 1);
+                
+                if (newDeck.indexOf(a[randNum]) == -1) { // if the new deck doesn't contain the card
+                    newDeck.push(a[randNum]); // choose a random index 
+                }
+                else{
+                    i--; //because we didn't add anything to the newDeck we don't want to increment
+                }
             }
 
-            
+            console.log("Deck shuffled")
             return newDeck;
         }
-
+    /*var dealCard = function (a,b){
+        return b.concat(a.pop());
+    }*/
     //Setting up the suits
     populateDeck(clubs, 'clubs');
     populateDeck(hearts, 'hearts');
@@ -50,8 +60,9 @@
     populateDeck(spades, 'spades');
     deck = deck.concat(clubs,hearts, diamonds, spades);       
     //console.log(shuffleDeck(deck));
-    console.log(deck);
+    //console.log(deck);
 
+    console.log(shuffleDeck(deck));
 
     //EVERYTHING BELOW BORROWED FROM pong.html (needs fixing)
     window.onload = function () {
@@ -81,8 +92,7 @@
         for (i = 20; i < 20 + 520; i += 10) { // draw 52 cards
             drawCard(i, 20);
         }
-        //drawCard(100,200);// draw the players hand
-        //drawCard(160, 200);
+        
         drawHand(100);
 
     }
@@ -90,12 +100,17 @@
     function drawCard(cardX, cardY) {
         colourRect(cardX, cardY, 50, 80, 'red');
         colourRect(cardX + 5, cardY + 5, 40, 70, 'blue')
+        
+        
+        canvasContext.fillStyle = 'yellow';
+        canvasContext.fillText(deck[5].value, cardX, cardY+50);
     }
 
     function drawHand(cardX) { // for drawing the players hand
         drawCard(cardX, 200);
         drawCard(cardX + 60, 200); //Future PSUEDO: For each card in hand, draw them 60px apart
         drawCard(cardX + 120, 200);
+       
     }
 
     function calcMousePos(evt) { //function for finding the cursor position
