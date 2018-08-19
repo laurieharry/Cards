@@ -1,7 +1,7 @@
 <html>
 
 <canvas id="gameCanvas" width="600" height="400"></canvas>
-
+<button type="button" onclick="dealCard()">Hit Me!</button>
 <script>
     var canvas;
     var canvasContext;
@@ -11,6 +11,13 @@
     var hearts = [{}];
     var spades = [{}];
     var diamonds = [{}];
+
+
+    var playerScore = 0;
+    var dealerScore = 0;
+    const WIN_SCORE = 21;
+
+    var showWinScreen = false;
 
 
     var populateDeck = function (name, suit) {
@@ -66,10 +73,30 @@
     deck = deck.concat(clubs, hearts, diamonds, spades);
     //console.log(shuffleDeck(deck));
 
-    //console.log(deck);
+
     deck = shuffleDeck(deck);
     console.log(deck);
-    //console.log(dealCard(deck));
+
+    var playerHand = [];
+    var dealerHand = [];
+
+    var dealCard = function () {
+        playerHand.push(deck.pop());
+        console.log(playerHand);
+    }
+
+    var calculateScore = function (hand) {
+        var score; 
+        for (i in hand) {
+            if (i == 'K', 'J', 'Q') {
+                score +=10;
+            }
+            else{
+                score += hand.value;
+            }
+
+        }
+    }
 
 
     //EVERYTHING BELOW BORROWED FROM pong.html (needs fixing)
