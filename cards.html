@@ -146,27 +146,32 @@
         //colourRect(20, 20, 50, 80, 'red');
         //colourRect(25, 25, 40, 70, 'blue');//draw card
         for (i = 20; i < 20 + 520; i += 10) { // draw 52 cards
-            drawCard(i, 20);
+            drawCard(i, 20, " ");
         }
 
         drawHand(90);
 
+        canvasContext.fillStyle = 'yellow';
+        canvasContext.fillText("Score: "+ calculateScore(playerHand), 300 , 300);
+
     }
 
-    function drawCard(cardX, cardY) {
+    function drawCard(cardX, cardY, val) {
         colourRect(cardX, cardY, 50, 80, 'red');
         colourRect(cardX + 5, cardY + 5, 40, 70, 'blue')
 
 
         canvasContext.fillStyle = 'yellow';
-        canvasContext.fillText(deck[5].value, cardX +22 , cardY + 45);
+        canvasContext.fillText(val, cardX +22 , cardY + 45);
     }
 
     function drawHand(cardX) { // for drawing the players hand
         var c = 0;
         for (i in playerHand){
-            drawCard(cardX + c, 200);
+            drawCard(cardX + c, 200, playerHand[i].value);
+            
             c+=60;
+           
         }
         
         /*drawCard(cardX, 200);
