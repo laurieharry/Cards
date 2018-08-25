@@ -149,7 +149,7 @@
             drawCard(i, 20);
         }
 
-        drawHand(100);
+        drawHand(90);
 
     }
 
@@ -159,13 +159,19 @@
 
 
         canvasContext.fillStyle = 'yellow';
-        canvasContext.fillText(deck[5].value, cardX, cardY + 50);
+        canvasContext.fillText(deck[5].value, cardX +22 , cardY + 45);
     }
 
     function drawHand(cardX) { // for drawing the players hand
-        drawCard(cardX, 200);
+        var c = 0;
+        for (i in playerHand){
+            drawCard(cardX + c, 200);
+            c+=60;
+        }
+        
+        /*drawCard(cardX, 200);
         drawCard(cardX + 60, 200); //Future PSUEDO: For each card in hand, draw them 60px apart
-        drawCard(cardX + 120, 200);
+        drawCard(cardX + 120, 200);*/
 
     }
 
