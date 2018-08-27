@@ -2,6 +2,8 @@
 
 <canvas id="gameCanvas" width="600" height="400"></canvas>
 <button type="button" onclick="dealCard(playerHand)">Hit Me!</button>
+<button type="button" onclick="dealCard(playerHand),dealCard(playerHand)">Deal</button>
+<button type="button" onclick="stand = true">Stand</button>
 <script>
     var canvas;
     var canvasContext;
@@ -18,7 +20,7 @@
     const WIN_SCORE = 21;
 
     var showWinScreen = false;
-
+    var stand = false; // for when the player chooses to "sit" on their score
 
     var populateDeck = function (name, suit) {
         for (i = 0; i <= 10; i++) { //  populate the deck
@@ -39,7 +41,7 @@
         console.log("Deck populated with " + suit);
     }
 
-    var shuffleDeck = function (a) { //function to shuffle the deck (NOT WORKING CORRECTLY)
+    var shuffleDeck = function (a) { 
         let newDeck = [];
 
         for (i = 0; i < a.length; i++) {
@@ -64,12 +66,12 @@
         var score = 0;
 
         for (i in hand) {
-            console.log(hand[i]);
+           
             if (hand[i].value == 'K' || hand[i].value == 'Q' || hand[i].value == 'J') {
                 score += 10;
             }
             else if (hand[i].value == 'A') { // Handle aces
-                if (score += 11 > 21) {
+                if (score + 11 > 21) {
                     score += 1;
                 }
                 else {
@@ -80,7 +82,9 @@
             else {
                 score += hand[i].value;
             }
-
+            if (hand == dealerHand && stand == false){ // return  now so that the second card in the dealer's hand isn't revealed to the player
+                return score;
+            }
         }
         if (score > 21) {
             return "BUSTED"
@@ -98,16 +102,20 @@
     populateDeck(spades, 'spades');
     deck = deck.concat(clubs, hearts, diamonds, spades);
     //console.log(shuffleDeck(deck));
-
+ 
 
     deck = shuffleDeck(deck);
     console.log(deck);
-
-    var playerHand = [];
-    playerHand.push(deck.pop());
-    playerHand.push(deck.pop());
-    console.log(calculateScore(playerHand));
     var dealerHand = [];
+    var playerHand = [];
+    dealerHand.push(deck.pop());
+    dealerHand.push(deck.pop());
+    console.log("Player score " + calculateScore(playerHand));
+    
+   
+
+    
+   
 
     var dealCard = function (hand) {
         hand.push(deck.pop());
@@ -116,7 +124,13 @@
     }
 
 
-
+if (stand == true){
+        while (calculateScore(dealerHand) <= calculateScore(playerHand)){
+            dealerHand.push(deck.pop()); //if the player is ahead then dealer hits
+            console.log("dealer score" + calculateScore(dealerHand));
+           
+        }
+    }
 
     //EVERYTHING BELOW BORROWED FROM pong.html (needs fixing)
 
@@ -145,14 +159,18 @@
 
         //colourRect(20, 20, 50, 80, 'red');
         //colourRect(25, 25, 40, 70, 'blue');//draw card
-        for (i = 20; i < 20 + 520; i += 10) { // draw 52 cards
-            drawCard(i, 20, " ");
+        for (i = 20; i < 20 + deck.length*10; i += 10) { // draw 52 cards
+            drawCard(i, 20, "@");
         }
 
-        drawHand(90);
+        drawHand(90, 250, playerHand);
+        drawHand(90, 150, dealerHand);
 
         canvasContext.fillStyle = 'yellow';
-        canvasContext.fillText("Score: "+ calculateScore(playerHand), 300 , 300);
+        canvasContext.fillText("Score: "+ calculateScore(playerHand), 250 , 290);
+
+        canvasContext.fillStyle = 'yellow';
+        canvasContext.fillText("Dealer score: "+ calculateScore(dealerHand), 250 , 180);
 
     }
 
@@ -165,11 +183,13 @@
         canvasContext.fillText(val, cardX +22 , cardY + 45);
     }
 
-    function drawHand(cardX) { // for drawing the players hand
+    function drawHand(cardX, cardY, hand) { // for drawing the players hand
         var c = 0;
-        for (i in playerHand){
-            drawCard(cardX + c, 200, playerHand[i].value);
-            
+        for (i in hand){
+            drawCard(cardX + c, cardY, hand[i].value);//Don't show one of the cards if it's the dealerhand
+            /*if (hand == dealerHand && stand == false){
+                break;
+            }*/
             c+=60;
            
         }
