@@ -4,6 +4,7 @@
 <button type="button" onclick="dealCard(playerHand)">Hit Me!</button>
 <button type="button" onclick="dealCard(playerHand),dealCard(playerHand)">Deal</button>
 <button type="button" onclick="stand = true">Stand</button>
+<button type="button" onclick="resetGame()">Play again</button>
 <script>
     var canvas;
     var canvasContext;
@@ -102,7 +103,7 @@
     populateDeck(spades, 'spades');
     deck = deck.concat(clubs, hearts, diamonds, spades);
     //console.log(shuffleDeck(deck));
- 
+    var resetDeck = shuffleDeck(deck); // store a full deck for resetting the game
 
     deck = shuffleDeck(deck);
     console.log(deck);
@@ -114,7 +115,14 @@
     
    
 
-    
+    var resetGame = function (){
+        deck = resetDeck;
+        dealerHand = [];
+        dealerHand.push(deck.pop());
+        dealerHand.push(deck.pop());
+        playerHand = [];
+        stand = false;
+    }
    
 
     var dealCard = function (hand) {
@@ -190,9 +198,9 @@
         var c = 0;
         for (i in hand){
             drawCard(cardX + c, cardY, hand[i].value);//Don't show one of the cards if it's the dealerhand
-            /*if (hand == dealerHand && stand == false){
+            if (hand == dealerHand && stand == false){
                 break;
-            }*/
+            }
             c+=60;
            
         }
