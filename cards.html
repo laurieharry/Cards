@@ -124,11 +124,10 @@
     }
 
 
-if (stand == true){
-        while (calculateScore(dealerHand) <= calculateScore(playerHand)){
-            dealerHand.push(deck.pop()); //if the player is ahead then dealer hits
-            console.log("dealer score" + calculateScore(dealerHand));
-           
+    var dealerTurn = function (){
+        while (calculateScore(playerHand) >= calculateScore(dealerHand)){
+            dealerHand.push(deck.pop());
+            console.log("Dealer score "+ calculateScore(dealerHand));
         }
     }
 
@@ -161,6 +160,10 @@ if (stand == true){
         //colourRect(25, 25, 40, 70, 'blue');//draw card
         for (i = 20; i < 20 + deck.length*10; i += 10) { // draw 52 cards
             drawCard(i, 20, "@");
+        }
+        
+        if (stand == true){
+            dealerTurn();
         }
 
         drawHand(90, 250, playerHand);
