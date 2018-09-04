@@ -109,8 +109,8 @@
     console.log(deck);
     var dealerHand = [];
     var playerHand = [];
-    dealerHand.push(deck.pop());
-    dealerHand.push(deck.pop());
+    //dealerHand.push(deck.pop());
+    //dealerHand.push(deck.pop());
     console.log("Player score " + calculateScore(playerHand));
     
    
@@ -178,10 +178,10 @@
         drawHand(90, 150, dealerHand);
 
         canvasContext.fillStyle = 'yellow';
-        canvasContext.fillText("Score: "+ calculateScore(playerHand), 250 , 290);
+        canvasContext.fillText("Score: "+ calculateScore(playerHand), 10 , 290);
 
         canvasContext.fillStyle = 'yellow';
-        canvasContext.fillText("Dealer score: "+ calculateScore(dealerHand), 250 , 180);
+        canvasContext.fillText("Dealer score: "+ calculateScore(dealerHand), 10 , 180);
 
     }
 
